@@ -1,0 +1,21 @@
+{
+  "name": "connect",
+  "version": "1.0.0",
+  "description": "socket connect",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.stargt.com.my:pan.feng/connect.git"
+  },
+  "keywords": [
+    "connect"
+  ],
+  "author": "fengpan",
+  "license": "ISC",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
+}
