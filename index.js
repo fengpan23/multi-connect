@@ -6,71 +6,33 @@
 const util = require('util');
 const events = require('events');
 const net = require('net');
-const _ = require('underscore');
 const Client = require('./lib/client.js');
-
-function createID(){
-    let id = '';
-    _.times(4, () => {id += _.random(10, 99)});
-    return +id;
-}
 
 class Connect extends events{
     constructor() {
         super();
-        this.clients = {};
     }
 
-   /**
-    * create server
-    * @param port
-    */
-   create(port) {
-       let me = this;
-       let server = net.createServer((socket) => {
+    /**
+     * create server when client connect emit 'connected' event and had client param
+     *
+     * that client had follow event ('data', 'reconnected', 'disconnect', 'error')
+     * @param opt {port: Number, id: String}
+     */
+    createServer(opt) {
+       let port = opt.port;
+       let server = net.createServer(socket => {
            let client = new Client(socket);
            client.on('connected', () => {
-               do{client.id = createID()}while(me.clients[client.id]);
-               me.clients[client.id] = client;
-               me.emit('connected', client);
+               this.emit('connected', client);
+           }).on('error', err => {
+               // console.error('client error: ', err);
            });
-
-           client.on('disconnect', () => {
-
-           });
-       }).on('error', (e) => {
-           console.error('create server error: ', e);
-           me.emit('error', e);
+           client.connect(new Date());
+       }).on('error', e => {
+           this.emit('error', e);
        });
-
-       server.listen(port, () => {
-           let address = server.address();
-           console.log('opened server on %j', address);
-       });
-   }
-
-   /**
-    * broadcast message
-    * @param {string} event 广播事件名称
-    * @param {json string} content 消息体json字符串
-    * */
-   broadcast(event, content) {
-       for (let client of this.clients){
-           if(client.verify > 0){
-               client.send(0, event, content);
-           }
-       }
+       server.listen(port);
    }
 }
-
 module.exports = Connect;
-
-//test
-let con = new Connect();
-con.create(3000);
-
-con.on('connected', (socket) => {
-    console.log('connected', socket);
-});
-
-let so = new net.createConnection(3000, '127.0.0.1');
