@@ -1,12 +1,12 @@
 /**
-* Created by fengpan on 2016/5/24.
+* Created by fengpan23@qq.com  on 2016/5/24.
 */
 "use strict";
 
 const util = require('util');
 const events = require('events');
 const net = require('net');
-const Client = require('./lib/client.js');
+const Client = require('./lib/client');
 
 class Connect extends events{
     constructor() {
@@ -19,20 +19,25 @@ class Connect extends events{
      * that client had follow event ('data', 'reconnected', 'disconnect', 'error')
      * @param opt {port: Number, id: String}
      */
-    createServer(opt) {
-       let port = opt.port;
-       let server = net.createServer(socket => {
+    createServer(opt, cb) {
+       let port = opt.port || 2323;
+       net.createServer(socket => {
            let client = new Client(socket);
            client.on('connected', () => {
                this.emit('connected', client);
            }).on('error', err => {
                // console.error('client error: ', err);
            });
-           client.connect(new Date());
+           client.connect(1232456798);
        }).on('error', e => {
            this.emit('error', e);
+       }).listen(port, () => {
+           cb && cb(port);
        });
-       server.listen(port);
    }
+
+    createClient(){
+
+    }
 }
 module.exports = Connect;
