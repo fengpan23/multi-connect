@@ -1,5 +1,5 @@
 ### example create server
-
+```
 let con = new Connect();
 con.createServer({port: 3000});
 
@@ -14,3 +14,4 @@ con.on('connected', (client) => {
     });
     clients.push(client);
 });
+```
