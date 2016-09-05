@@ -6,13 +6,13 @@ con.createServer({port: 3000}, function (port) {
 
 let clients = [], id = 1;
 con.on('connected', client => {
-    console.log('client connected !!!', client);
     client.id = ++id;
-    client.on('disconnect', (id, smooth) => {
+    client.on('disconnect', id => {
         console.log('..... disconnect ......', id);
-        console.log('..... smooth ......', smooth);
     }).on('data', data => {
         console.log('..... data ......', data);
     });
+
+    client.send({id: 21, event: 'request', data: {data: 121212}});
     clients.push(client);
 });

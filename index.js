@@ -6,7 +6,7 @@
 const util = require('util');
 const events = require('events');
 const net = require('net');
-const Client = require('./lib/client');
+const ServerClient = require('./lib/server_client');
 
 class Connect extends events{
     constructor() {
@@ -22,7 +22,7 @@ class Connect extends events{
     createServer(opt, cb) {
        let port = opt.port || 2323;
        net.createServer(socket => {
-           let client = new Client(socket);
+           let client = new ServerClient(socket);
            client.on('connected', () => {
                this.emit('connected', client);
            }).on('error', err => {
