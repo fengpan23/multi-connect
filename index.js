@@ -35,6 +35,7 @@ class Connect extends Events{
        }).listen(port, () => {
            cb && cb(port);
        });
+        return this;
    }
 
     createClient(){
