@@ -41,4 +41,4 @@ class Connect extends Events{
 
     }
 }
-module.exports = Connect;
+module.exports = new Connect();
