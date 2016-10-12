@@ -3,12 +3,11 @@
 */
 "use strict";
 
-const util = require('util');
-const events = require('events');
-const net = require('net');
+const Events = require('events');
+const Net = require('net');
 const ServerClient = require('./lib/server_client');
 
-class Connect extends events{
+class Connect extends Events{
     constructor() {
         super();
     }
@@ -21,12 +20,14 @@ class Connect extends events{
      */
     createServer(opt, cb) {
        let port = opt.port || 2323;
-       net.createServer(socket => {
+        Net.createServer(socket => {
            let client = new ServerClient(socket);
            client.on('connected', () => {
                this.emit('connected', client);
            }).on('error', err => {
                // console.error('client error: ', err);
+           }).on('data', content => {
+                this.emit('request', client, content);
            });
            client.connect(1232456798);
        }).on('error', e => {
