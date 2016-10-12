@@ -19,7 +19,7 @@ class Connect extends Events{
      * @param opt {port: Number, id: String}
      */
     createServer(opt, cb) {
-       let port = opt.port || 2323;
+        let port = opt && opt.port || 2323;
         Net.createServer(socket => {
            let client = new ServerClient(socket);
            client.on('connected', () => {
