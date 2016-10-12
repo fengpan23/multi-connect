@@ -1,11 +1,11 @@
 let Connect = require('../');
-let con = new Connect();
-con.createServer({port: 3000}, function (port) {
+
+let server = Connect.createServer({port: 3000}, function (port) {
     console.log('server start on port: ', port);
 });
 
 let clients = [], id = 1;
-con.on('connected', client => {
+server.on('connected', client => {
     client.id = ++id;
     client.on('disconnect', id => {
         console.log('..... disconnect ......', id);

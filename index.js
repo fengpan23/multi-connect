@@ -18,7 +18,7 @@ class Connect extends Events{
      * that client had follow event ('data', 'reconnected', 'disconnect', 'error')
      * @param opt {port: Number, id: String}
      */
-    createServer(opt, cb) {
+    createServer(opt, timeout) {
         let port = opt && opt.port || 2323;
         Net.createServer(socket => {
            let client = new ServerClient(socket);
@@ -33,7 +33,7 @@ class Connect extends Events{
        }).on('error', e => {
            this.emit('error', e);
        }).listen(port, () => {
-           cb && cb(port);
+           console.log('server start on port: ' + port);
        });
         return this;
    }
