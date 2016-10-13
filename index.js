@@ -16,9 +16,9 @@ class Connect extends Events{
      * create server when client connect emit 'connected' event and had client param
      *
      * that client had follow event ('data', 'reconnected', 'disconnect', 'error')
-     * @param opt {port: Number, id: String}
+     * @param opt {object} {port: Number}
      */
-    createServer(opt, timeout) {
+    createServer(opt) {
         let port = opt && opt.port || 2323;
         Net.createServer(socket => {
            let client = new ServerClient(socket);
