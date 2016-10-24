@@ -1,6 +1,6 @@
 let Connect = require('../');
 
-let server = Connect.createServer({port: 3000}, function (port) {
+let server = Connect.createServer({port: 2323}, function (port) {
     console.log('server start on port: ', port);
 });
 
