@@ -25,9 +25,8 @@ class Connect extends Events{
            client.on('connected', () => {
                this.emit('connected', client);
            }).on('error', err => {
-               // console.error('client error: ', err);
-           }).on('data', content => {
-                this.emit('request', client, content);
+               console.error('client error: ', err);
+               this.emit('error', err);
            });
            client.connect(1232456798);
        }).on('error', e => {
