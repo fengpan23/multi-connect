@@ -1,8 +1,7 @@
 const Client = require('../lib/client');
 
 let client = new Client();
-client.on('connected', function (data) {
-    console.log('conn data, ', data);
+client.on('connected', function () {
     client.send(0, "init", {
         tableid : 211,
         gameid : 12,
@@ -17,4 +16,4 @@ client.on('connected', function (data) {
 }).on('disconnect', () => {
     // client.connect({port: 3000});
 });
-client.connect({port: 4567});
+client.connect({port: 2323});
