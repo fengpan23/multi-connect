@@ -24,8 +24,8 @@ class Connect extends Events{
            let client = new ServerClient(socket);
            client.on('connected', () => {
                this.emit('connected', client);
-           }).on('disconnect', () => {
-               this.emit('disconnect', client);
+           }).on('disconnect', id => {
+               this.emit('disconnect', id);
            }).on('error', err => {
                console.error('client error: ', err);
                this.emit('error', err);
