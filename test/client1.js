@@ -9,8 +9,10 @@ client.on('connected', function () {
     });
 }).on('init', function (data) {
     console.log('init data: ', data);
+    client.send(0, "seat", {index : 1});
 }).on('request', function (data) {
     console.log('on request: ', data);
+    client.send(0, "seat", {index : 1});
 }).on('error', error => {
     console.log('client error: ', error);
 }).on('disconnect', () => {
