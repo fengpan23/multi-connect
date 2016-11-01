@@ -9,13 +9,13 @@ client.on('connected', function () {
     });
 }).on('init', function (data) {
     console.log('init data: ', data);
-    client.send(0, "seat", {index : 1});
+    client.send(0, "userjoin", {index : 1});
 }).on('request', function (data) {
     console.log('on request: ', data);
-    client.send(0, "seat", {index : 1});
+    client.send(0, "userjoin", {index : 1});
 }).on('error', error => {
     console.log('client error: ', error);
 }).on('disconnect', () => {
     // client.connect({port: 3000});
 });
-client.connect({port: 2323});
+client.connect({port: 50220});
