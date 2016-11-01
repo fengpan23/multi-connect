@@ -6,7 +6,7 @@ client.on('connected', function () {
     client.send(0, "init", {
         tableid : 12,
         gameid : 12,
-        session : 12
+        session : 13
     });
 
 }).on('request', function (data) {
