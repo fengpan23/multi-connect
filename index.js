@@ -4,6 +4,7 @@
 "use strict";
 
 const Net = require('net');
+const Http = require('http');
 const Events = require('events');
 const ServerClient = require('./lib/server_client');
 
@@ -36,6 +37,14 @@ class Connect extends Events{
        }).listen(port, () => {
            console.log('server start on port: ' + port);
        });
+
+        Http.createServer(function (req, res) {
+            console.log("...........server");
+        }).on("upgrade", function (req, socket, upgradeHead) {
+            me.wsconnection(req, socket);
+        }).listen(port, host, ()=> {
+            console.log('http server start on port: ' + port);
+        });
         return this;
    }
 
