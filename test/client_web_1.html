@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        var ip = 'localhost';
+        var port = 3000;
+        var ws = new WebSocket("ws://" + ip + ":" + port);
+
+        ws.onopen = function () {
+            ws.connected = true;
+            // use this to connected game indirection
+            console.log('onopen!');
+            send(1212, 121212)
+//            _this.trigger('connected');
+        };
+        ws.onclose = function () {
+            console.log('WebSocketClosed!');
+        };
+        ws.onerror = function () {
+            console.log('WebSocketError!');
+        };
+        ws.onmessage = function (e) {
+            console.log('onmessage!');
+            var message = {};
+            try {
+                message = JSON.parse(e.data);
+            } catch (e) {
+                console.log('parse receive data error !!!', e);
+            }
+            //when use html-socket trigger connected after receive connected data
+            //if(message.state === 'connected'){
+            //    return Client.trigger('connected');
+            //}
+//            _this.trigger('message', message);
+        };
+
+        var send = function (event, content) {
+            if (ws.connected && event) {
+                ws.send(JSON.stringify({id: 0, event: event, content: content || {}}));
+            }
+        }
+
+    </script>
+</body>
+</html>

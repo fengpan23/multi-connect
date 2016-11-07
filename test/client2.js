@@ -1,4 +1,4 @@
-const Client = require('../lib/client');
+const Client = require('../module/client');
 
 let client = new Client();
 client.connect({port: 2323});

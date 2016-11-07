@@ -3,7 +3,7 @@
  */
 "use strict";
 const Events = require('events');
-const Net = require('./net');
+const Net = require('../lib/net');
 
 const COMPRESS = 1;
 const TRANSPORT_CODE = 3;
@@ -23,7 +23,7 @@ class Client extends Events{
             this._rewrite();
         }).on('end', () => {
             console.log('socket end');
-            this._smooth = true;
+            // this._smooth = true;
         }).on('close',() => {
             console.log('socket close');
             this._disconnect();
@@ -47,11 +47,12 @@ class Client extends Events{
             this._socket.destroy();
         }).on('reply', code => {
             console.log('net reply code: ', code);
-            this._write(this._net.pack(null, code));
+            this._write(Net.pack(null, code));
         }).on('all', data => {
             this._all(data);
         });
     }
+
     get id(){
         return this._id;
     }
@@ -61,7 +62,7 @@ class Client extends Events{
      * @param data
      */
     send(data) {
-        this._write(this._net.pack(data, TRANSPORT_CODE));
+        this._write(Net.pack(data, TRANSPORT_CODE));
     }
 
     /**
@@ -71,11 +72,11 @@ class Client extends Events{
     connect(id) {
         let code;
         if (!id) {
-            code = this._net.getCode('connected') + TRANSPORT_CODE;
-            this._write(this._net.pack({receive: HEART_BEAT_RECEIVE, send: HEART_BEAT}, code));
+            code = Net.getCode('connected') + TRANSPORT_CODE;
+            this._write(Net.pack({receive: HEART_BEAT_RECEIVE, send: HEART_BEAT}, code));
         } else {
-            code = this._net.getCode('connect') + COMPRESS;
-            this._write(this._net.pack(id, code));
+            code = Net.getCode('connect') + COMPRESS;
+            this._write(Net.pack(id, code));
             this._id = id;
             this._connected = true;
         }
@@ -86,7 +87,7 @@ class Client extends Events{
      * @param err
      */
     close(err) {
-        this._write(this._net.pack(err, this._net.getCode('disconnect') + COMPRESS));
+        this._write(Net.pack(err, Net.getCode('disconnect') + COMPRESS));
         this._connected = false;
         this._socket.end();
         this._socket.destroy();

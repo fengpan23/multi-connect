@@ -1,11 +1,10 @@
 let Connect = require('../');
 
-let server = Connect.createServer({port: 4567}, function (port) {
-    console.log('server start on port: ', port);
-});
+let server = Connect.createServer({port: 4567});
 
 let clients = [], id = 1;
 server.on('connected', client => {
+
     client.id = ++id;
     client.on('disconnect', id => {
         console.log('..... disconnect ......', id);

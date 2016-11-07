@@ -12,7 +12,7 @@ class client extends Events{
         this._net = new net();
         this._net.on('connect', id => {
             this.id = id;
-            this._write(this._net.pack(null, this._net.getCode('connect')));
+            this._write(net.pack(null, net.getCode('connect')));
         }).on('connected', () => {
             this.emit('connected', this.id);
         }).on('disconnect', id => {
@@ -37,7 +37,7 @@ class client extends Events{
     send(id, event, content) {
         let data = {id: id, event: event, content: content};
         if (event !== '')
-            this._write(this._net.pack(data, TRANSPORT_CODE));
+            this._write(net.pack(data, TRANSPORT_CODE));
     }
 
     close() {

@@ -1,4 +1,4 @@
-const Client = require('../lib/client');
+const Client = require('../module/client');
 
 let client = new Client();
 client.on('connected', function () {
@@ -18,4 +18,4 @@ client.on('connected', function () {
 }).on('disconnect', () => {
     // client.connect({port: 3000});
 });
-client.connect({port: 50220});
+client.connect({port: 2323});
