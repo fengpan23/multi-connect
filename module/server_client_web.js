@@ -3,10 +3,10 @@ const Crypto = require('crypto');
 const Protocol = require('../lib/protocol_web');
 
 class Client extends Events {
-    constructor(socket) {
+    constructor(socket, id) {
         super();
 
-        this._id = null;
+        this._id = id;
 
         this._protocol = new Protocol();
         this._protocol.on('data',  data => {
@@ -20,22 +20,20 @@ class Client extends Events {
             } catch (err) {
                 console.error('received data error', err);
             }
+        }).on('close', () => {
+            this._disconnect();
         }).on('ping', () => {
             this._write(this._protocol.pong);
         }).on('pong', () => {
             this._pingTimes = 0;
         });
 
-
         socket
             .on('data', data => {this._protocol.append(data);})
             .on('error', this._error.bind(this))
-            .on('end', ()=> {
-                console.log('end ...');
-                this.smooth = true
-            })
-            .on('close', this._disconnect.bind(this))
-            .on('drain', this._rewrite.bind(this));
+            .on('end', ()=> this._smooth = true)
+            .on('close', this.close.bind(this))
+            .on('drain', this._rewrite.bind(this))
             .on('timeout', this._rewrite.bind(this));
 
         this._socket = socket;
@@ -80,15 +78,7 @@ class Client extends Events {
             this._connected = true;
             this.emit('connected');
 
-            let interval = setInterval(() => {
-                if (this._pingTimes >= 3) {
-                    clearInterval(interval);
-                    this.close('timeout');
-                }else{
-                    this._write(this._protocol.ping);
-                    this._pingTimes++;
-                }
-            }, 1000);
+            this._startHeartBeat();
         });
     }
 
@@ -101,8 +91,9 @@ class Client extends Events {
     }
 
     close(err) {
-        console.error(err);
-        this._write(Protocol.pack(err));
+        if(this._connected){
+            this._write(Protocol.pack(err));
+        }
         this._connected = false;
         this._socket.destroy();
     }
@@ -122,17 +113,30 @@ class Client extends Events {
     }
 
     _error(e) {
-        console.error(e.stack)
         this.emit('error', e);
     }
 
     _disconnect() {
-        console.log('disconnect');
+        this._stopHeartBeat();
         this._connected = false;
         this._socket.destroy();
         this.emit('disconnect', this._id);
     }
 
+    _startHeartBeat(){
+        this._heartBeat = setInterval(() => {
+            if (this._pingTimes >= 3) {
+                this.close('timeout');
+            }else{
+                this._write(this._protocol.ping);
+                this._pingTimes++;
+            }
+        }, 1000);
+    }
+
+    _stopHeartBeat(){
+        clearInterval(this._heartBeat);
+    }
 }
 
 module.exports = Client;

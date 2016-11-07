@@ -14,7 +14,8 @@
             ws.connected = true;
             // use this to connected game indirection
             console.log('onopen!');
-            send(1212, 121212)
+            send(1212, 121212);
+            ws.close();
 //            _this.trigger('connected');
         };
         ws.onclose = function () {

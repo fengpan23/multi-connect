@@ -56,7 +56,6 @@ class Connect extends Events{
             }).on('disconnect', id => {
                 this.emit('disconnect', id);
             }).on('error', err => {
-                console.error('client error: ', err);
                 this.emit('error', err);
             });
             client.connect(idRange++);
