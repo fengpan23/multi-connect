@@ -6,6 +6,7 @@
 const Net = require('net');
 const Http = require('http');
 const Events = require('events');
+const Client = require('./module/client');
 const ServerClient = require('./module/server_client');
 const ServerClientWeb = require('./module/server_client_web');
 
@@ -87,7 +88,7 @@ class Connect extends Events{
    }
 
     createClient(){
-
+        return new Client();
     }
 }
 module.exports = new Connect();
