@@ -16,20 +16,17 @@ class Client extends Events{
         this._id = null;
         this._buf = [];
         this._socket = socket;
-        socket.on('data', data => {
-            this._receive(data);
-        }).on('drain', () => {
-            console.log('socket drain');
-            this._rewrite();
-        }).on('end', () => {
-            console.log('socket end');
-            // this._smooth = true;
-        }).on('close',() => {
-            console.log('socket close');
-            this._disconnect();
-        }).on('error', err => {
-            this.emit('socket error', err);
-        });
+        socket
+            .on('data', this._receive.bind(this))
+            .on('drain', this._rewrite.bind(this))
+            .on('end', () => {
+                console.log('socket end');
+                // this._smooth = true;
+            })
+            .on('close',this._disconnect.bind(this))
+            .on('error', err => {
+                this.emit('error', err);
+            });
 
         this._net = new Net();
         this._net.on('connect', () => {
