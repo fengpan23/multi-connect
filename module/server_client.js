@@ -25,7 +25,7 @@ class Client extends Events{
             })
             .on('close',this._disconnect.bind(this))
             .on('error', err => {
-                this.emit('error', err);
+                this.emit('error', err, 'socket error');
             });
 
         this._net = new Net();

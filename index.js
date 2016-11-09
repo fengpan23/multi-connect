@@ -56,12 +56,12 @@ class Connect extends Events{
                 this.emit('connected', client);
             }).on('disconnect', id => {
                 this.emit('disconnect', id);
-            }).on('error', err => {
-                this.emit('error', err);
+            }).on('error', (e, hook) => {
+                this.emit('error', e, hook);
             });
             client.connect(idRange++);
         }).on('error', e => {
-            this.emit('error', e);
+            this.emit('error', e, 'net server error');
         }).listen(port, host, () => {
             console.log('net server start on port: ' + port);
         });
