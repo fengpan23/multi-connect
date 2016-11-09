@@ -5,9 +5,7 @@ const Protocol = require('../lib/protocol_web');
 class Client extends Events {
     constructor(socket, id) {
         super();
-
         this._id = id;
-
         this._protocol = new Protocol();
         this._protocol.on('data',  data => {
             try {
@@ -37,6 +35,16 @@ class Client extends Events {
             .on('timeout', this._rewrite.bind(this));
 
         this._socket = socket;
+    }
+
+    get id(){
+        return this._id;
+    }
+    get remote(){
+        return {
+            ip: this._socket['remoteAddress'],
+            port: this._socket['remotePort']
+        };
     }
 
     connect(request) {

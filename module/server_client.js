@@ -53,6 +53,12 @@ class Client extends Events{
     get id(){
         return this._id;
     }
+    get remote(){
+        return {
+            ip: this._socket['remoteAddress'],
+            port: this._socket['remotePort']
+        };
+    }
 
     /**
      * client method send message to request client
