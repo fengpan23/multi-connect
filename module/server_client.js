@@ -35,7 +35,7 @@ class Client extends Events{
         }).on('reconnect', () => {
             console.log('net reconnect');
             this.connect();
-            this.emit('reconnected');
+            this.emit('reconnect');
         }).on('disconnect', () => {
             console.log('net disconnect');
             this.close();
@@ -46,7 +46,8 @@ class Client extends Events{
             console.log('net reply code: ', code);
             this._write(Net.pack(null, code));
         }).on('all', data => {
-            this._all(data);
+            console.log('net all: ', data);
+            // this._all(data);
         });
     }
 
