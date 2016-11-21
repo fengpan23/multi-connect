@@ -1,4 +1,4 @@
-let Connect = require('../');
+let Connect = require('../index');
 
 let server = Connect.createServer({port: 4567});
 

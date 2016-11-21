@@ -43,7 +43,6 @@ class Client extends Events{
             console.log('net timeout');
             this._socket.destroy();
         }).on('reply', code => {
-            console.log('net reply code: ', code);
             this._write(Net.pack(null, code));
         }).on('all', data => {
             console.log('net all: ', data);

@@ -60,7 +60,7 @@ class client extends Events{
         let received;
         while (received = this._net.get()) {
             let event = received.event || 'request';
-            let data = received.data || received;
+            let data = received.content || received;
             this.emit(event, data);
         }
     }

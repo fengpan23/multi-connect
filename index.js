@@ -49,7 +49,7 @@ class Connect extends Events{
      * @private
      */
     _createNetServer(port, host){
-        let idRange = 100000000;
+        let idRange = 10000000;
         Net.createServer(socket => {
             let client = new ServerClient(socket);
             client.on('connected', () => {
