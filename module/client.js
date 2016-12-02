@@ -5,20 +5,23 @@ const Events = require('events');
 const net = require('../lib/net');
 const TRANSPORT_CODE = 3;
 
-class client extends Events{
+class Client extends Events{
     constructor() {
         super();
         this._connected = false;
         this._net = new net();
         this._net.on('connect', id => {
-            this.id = id;
+            this._id = id;
             this._write(net.pack(null, net.getCode('connect')));
         }).on('connected', () => {
-            this.emit('connected', this.id);
+            this.emit('connected', this._id);
         }).on('disconnect', id => {
             console.log('disconnect data: ', id);
             this.close();
         });
+    }
+    get id(){
+        return this._id;
     }
 
     connect(options) {
@@ -84,4 +87,4 @@ class client extends Events{
     }
 }
 
-module.exports = client;
+module.exports = Client;
