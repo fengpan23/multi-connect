@@ -80,8 +80,8 @@ class Connect extends Events{
             let t = opt.type.toLowerCase().replace(/(\w)/,v => v.toUpperCase());
             this['_create' + t +'Server'](port, host);
         }else{
-            this._createNetServer(opt.netPort || 2323, host);
-            this._createHttpServer(opt.httpPort || 3000, host);
+            this._createNetServer(opt['netPort'] || 2323, host);
+            this._createHttpServer(opt['httpPort'] || 3000, host);
         }
 
         return this;
