@@ -1,14 +1,14 @@
 {
-  "name": "socket-connect",
+  "name": "multi-connect",
   "version": "1.0.0",
-  "description": "socket connect",
+  "description": "socket connect webSocket",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:fengpan23/socket-connect.git"
+    "url": "git@github.com:fengpan23/multi-connect.git"
   },
   "keywords": [
     "connect"
