@@ -1,5 +1,5 @@
 {
-  "name": "connect",
+  "name": "socket-connect",
   "version": "1.0.0",
   "description": "socket connect",
   "main": "index.js",
@@ -14,7 +14,7 @@
   "keywords": [
     "connect"
   ],
-  "author": "fengpan",
+  "author": "pan.feng@uprightlaw.biz",
   "license": "ISC",
   "dependencies": {
     "underscore": "^1.8.3"
